@@ -32,9 +32,12 @@
 \definecolor{UniboInk}{RGB}{35, 31, 32}
 \definecolor{UniboMuted}{RGB}{97, 83, 82}
 \definecolor{UniboGold}{RGB}{207, 166, 92}
+\definecolor{ACLRed}{RGB}{236, 50, 67}
+\definecolor{ACLBlue}{RGB}{0, 86, 147}
 
 \setbeamercolor{headline}{fg=white,bg=UniboRed}
 \setbeamercolor{headline rule}{bg=UniboDark}
+\setbeamercolor{headline blue rule}{bg=ACLBlue}
 \setbeamercolor{structure}{fg=UniboRed}
 \setbeamercolor{block title}{fg=UniboRed,bg=white}
 \setbeamercolor{block separator}{bg=UniboRed}
@@ -71,30 +74,44 @@
 % Title
 % ====================
 
-\title{LLMs Underperform Graph-Based Parsers on Supervised Relation Extraction for Complex Graphs}
+\title{LLMs Underperform Graph-Based Parsers on Supervised Relation Extraction \\ for Complex Graphs}
 
-\author{Paolo Gajo \inst{1} \and Domenic Rosati \inst{2} \and Hassan Sajjad \inst{2} \and Alberto Barrón-Cedeño \inst{1}}
+\author{Paolo Gajo\textsuperscript{1} \and Domenic Rosati\textsuperscript{2} \and Hassan Sajjad\textsuperscript{2} \and Alberto Barrón-Cedeño\textsuperscript{1}\\[0.6ex]
+{\normalsize \textsuperscript{1}\{paolo.gajo2,a.barron\}@unibo.it \quad \textsuperscript{2}\{Domenic.Rosati,HSajjad\}@dal.ca}}
 
-\institute[shortinst]{\inst{1} University of Bologna \samelineand \inst{2} Dalhousie University}
+\institute[shortinst]{\textsuperscript{1} University of Bologna \samelineand \textsuperscript{2} Dalhousie University}
 
 % ====================
 % Footer and logos
 % ====================
 
 \footercontent{
-  \large ACL 2026, San Diego, USA \hfill
+  % \large ACL 2026, San Diego, USA 
+  % \hfill
+  % \includegraphics[height=8ex]{\assetdir/logos/conferences/ACL2026_logo_v8.png}
+  % \hfill
   % Relation extraction as graph-based dependency parsing \hfill
-  \href{mailto:paolo.gajo2@unibo.it}{paolo.gajo2@unibo.it}}
+  % \href{mailto:paolo.gajo2@unibo.it}{paolo.gajo2@unibo.it}, \,
+  % \href{mailto:Domenic.Rosati@Dal.Ca}{Domenic.Rosati@Dal.Ca}, \,
+  % \href{mailto:HSajjad@dal.ca}{HSajjad@dal.ca}, \,
+  % \href{mailto:a.barron@unibo.it}{a.barron@unibo.it*}
+  }
+  
+  
+  
 
 \logoleft{%
   % \makebox[24cm][l]{%
-    \includegraphics[height=6cm]{\assetdir/logos/universities/Seal_of_the_University_of_Bologna_bg.pdf}%
+    \includegraphics[height=7cm]{\assetdir/logos/universities/Seal_of_the_University_of_Bologna_bg.pdf}%
     \hspace{0.5cm}%
-    \includegraphics[height=6cm]{\assetdir/logos/universities/dal_shield.pdf}%
+    \includegraphics[height=7cm]{\assetdir/logos/universities/dal_shield.pdf}%
   % }%
   }
 \logoright{
-    \includegraphics[width=18cm]{\assetdir/logos/conferences/ACL2026_logo_v8.png}%
+    \begin{tabular}{c}
+      \includegraphics[height=7cm]{\assetdir/graph_parsers_vs_llms_qr/graph_parsers_vs_llms_qr.pdf}\\[2ex]
+      \colorbox{ACLBlue}{\makebox[7cm][c]{\strut\textcolor{white}{\normalsize\bfseries GitHub Repo}}}
+    \end{tabular}%
   }
 
 % ====================

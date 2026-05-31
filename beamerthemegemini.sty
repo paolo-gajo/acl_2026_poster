@@ -14,6 +14,7 @@
   \RequirePackage{fontspec}
 \fi
 \RequirePackage{calc}
+\RequirePackage[most]{tcolorbox}
 
 % ====================
 % Fonts
@@ -135,11 +136,16 @@
 {
   \begin{beamercolorbox}{headline}
     \noindent
+    \vspace{-0.1cm}
+    \ifbeamercolorempty[bg]{headline blue rule}{}{
+      % \vspace{-0.6cm}
+      \begin{beamercolorbox}[wd=\paperwidth,ht=12bp,dp=0pt]{headline blue rule}\end{beamercolorbox}
+    }
     \ifdefined\insertlogoleft
-      \makebox[0pt][l]{\hspace{2.1cm}\smash{\raisebox{-9.5cm}{\insertlogoleft}}}%
+      \makebox[0pt][l]{\hspace{2.1cm}\smash{\raisebox{-11.0cm}{\insertlogoleft}}}%
     \fi
     \ifdefined\insertlogoright
-      \makebox[\paperwidth][r]{\smash{\raisebox{-8.5cm}{\insertlogoright}}\hspace{2.1cm}}%
+      \makebox[\paperwidth][r]{\smash{\raisebox{-7.5cm}{\insertlogoright}}\hspace{2.1cm}}%
     \fi
     \usebeamerfont{headline}
     \vskip3ex
@@ -167,6 +173,10 @@
     \ifbeamercolorempty[bg]{headline rule}{}{
       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
     }
+    \ifbeamercolorempty[bg]{headline blue rule}{}{
+      \vspace{-0.6cm}
+      \begin{beamercolorbox}[wd=\paperwidth,ht=12bp,dp=0pt]{headline blue rule}\end{beamercolorbox}
+    }
   \end{beamercolorbox}
 }
 
@@ -191,96 +201,97 @@
 {
   \end{beamercolorbox}
   \vskip0pt
-  \vspace*{3ex}
+  \vspace*{1.5ex}
 }
 
 % Alert Block
 \setbeamertemplate{block alerted begin}
 {
-  \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block title alerted}
-    
-    % \vskip0pt
-    
-    \usebeamerfont{block title}\insertblocktitle
-    
-    % \vspace{-1cm}
-
-    % \vskip10.00ex
-
-    % \begin{beamercolorbox}[colsep=0.025ex]{block separator alerted}\end{beamercolorbox}
-
-  \end{beamercolorbox}
-
-  % {\parskip0pt\par}
-
+  \begin{tcolorbox}[
+    enhanced,
+    width=\linewidth,
+    arc=15pt,
+    outer arc=15pt,
+    boxrule=0pt,
+    colback=UniboRose,
+    colframe=UniboRed,
+    colbacktitle=UniboRed,
+    coltitle=white,
+    fonttitle=\usebeamerfont{block title},
+    halign title=center,
+    title={\insertblocktitle},
+    left=1ex,
+    right=1ex,
+    top=1ex,
+    bottom=1ex,
+    toptitle=1ex,
+    bottomtitle=1ex
+  ]
   \usebeamerfont{block body}
-  
-  % \vskip1ex
-  
-  \begin{beamercolorbox}[colsep*=0ex]{block body alerted}
   \justifying
-  
-  \begin{adjustwidth}{1ex}{1ex}
-
-  % \setlength{\parskip}{1ex}
-  
-  % \vskip1ex
 }
 
 \setbeamertemplate{block alerted end}
 {
-  \end{adjustwidth}
-  
-  \vskip1ex
-  
-  \end{beamercolorbox}
+  \end{tcolorbox}
   \vskip0pt
-  \vspace*{3ex}
+  \vspace*{1.5ex}
 }
 
 % Example Block
 \setbeamertemplate{block example begin}
 {
-  \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block title example}
-    \vskip0pt
-    \usebeamerfont{block title}\insertblocktitle
-    \vskip-1.25ex
-    \begin{beamercolorbox}[colsep=0.025ex]{block separator example}\end{beamercolorbox}
-  \end{beamercolorbox}
-  {\parskip0pt\par}
+  \begin{tcolorbox}[
+    enhanced,
+    width=\linewidth,
+    arc=15pt,
+    outer arc=15pt,
+    boxrule=0pt,
+    colback=UniboRose,
+    colframe=UniboGold,
+    colbacktitle=UniboRose,
+    coltitle=UniboDark,
+    fonttitle=\usebeamerfont{block title},
+    halign title=center,
+    title={\insertblocktitle},
+    left=1ex,
+    right=1ex,
+    top=1ex,
+    bottom=1ex,
+    toptitle=1ex,
+    bottomtitle=1ex
+  ]
   \usebeamerfont{block body}
-  \vskip-0.5ex
-  \begin{beamercolorbox}[colsep*=0ex]{block body example}
   \justifying
-  \begin{adjustwidth}{1ex}{1ex}
   \setlength{\parskip}{1ex}
-  \vskip-2ex
 }
 \setbeamertemplate{block example end}
 {
-  \end{adjustwidth}
-  \vskip1ex
-  \end{beamercolorbox}
+  \end{tcolorbox}
   \vskip0pt
-  \vspace*{3ex}
+  \vspace*{1.5ex}
 }
 
 % Footer
 \newcommand{\footercontent}[1]{\newcommand{\insertfootercontent}{#1}}
 
+% \setbeamertemplate{footline}{
+%   \ifdefined\insertfootercontent
+%   \begin{beamercolorbox}[vmode]{headline}
+%     \ifbeamercolorempty[bg]{headline rule}{}{
+%       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.25ex]{headline rule}\end{beamercolorbox}
+%     }
+%     \begin{minipage}[c][10ex][c]{\paperwidth}
+%       \centering
+%       \makebox[\dimexpr\paperwidth-2cm\relax][c]{%
+%         \usebeamerfont{footline}%
+%         \insertfootercontent
+%       }%
+%     \end{minipage}
+%   \end{beamercolorbox}
+%   \else\fi
+% }
+
 \setbeamertemplate{footline}{
-  \ifdefined\insertfootercontent
-  \begin{beamercolorbox}[vmode]{headline}
-    \ifbeamercolorempty[bg]{headline rule}{}{
-      \begin{beamercolorbox}[wd=\paperwidth,colsep=0.25ex]{headline rule}\end{beamercolorbox}
-    }
-    \begin{minipage}[c][5ex][c]{\paperwidth}
-      \centering
-      \makebox[\dimexpr\paperwidth-2cm\relax][c]{%
-        \usebeamerfont{footline}%
-        \insertfootercontent
-      }%
-    \end{minipage}
-  \end{beamercolorbox}
-  \else\fi
+  \noindent\includegraphics[width=\paperwidth]{\assetdir/logos/conferences/ACL2026_logo_v8_footer.pdf}%
 }
