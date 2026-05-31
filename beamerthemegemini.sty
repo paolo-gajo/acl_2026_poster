@@ -8,24 +8,45 @@
 \RequirePackage{exscale}
 \RequirePackage{ragged2e}
 \RequirePackage{changepage}
-\RequirePackage{fontspec}
+\RequirePackage{iftex}
+\ifPDFTeX
+\else
+  \RequirePackage{fontspec}
+\fi
 \RequirePackage{calc}
 
 % ====================
 % Fonts
 % ====================
 
-\newfontfamily\Raleway[Ligatures=TeX]{Raleway}
-\newfontfamily\Lato[Ligatures=TeX]{Lato}
+\ifPDFTeX
+  \newcommand{\Raleway}{\sffamily}
+  \newcommand{\Lato}{\sffamily}
+\else
+  \IfFontExistsTF{Raleway}{
+    \newfontfamily\Raleway[Ligatures=TeX]{Raleway}
+  }{
+    \newfontfamily\Raleway[Ligatures=TeX]{TeX Gyre Heros}
+  }
+  \IfFontExistsTF{Lato}{
+    \newfontfamily\Lato[Ligatures=TeX]{Lato}
+  }{
+    \newfontfamily\Lato[Ligatures=TeX]{TeX Gyre Heros}
+  }
 
-\usefonttheme{professionalfonts}
+  \usefonttheme{professionalfonts}
 
-\setsansfont{Lato}[
-  UprightFont=*-Light,
-  ItalicFont=*-LightItalic,
-  BoldFont=*-Regular,
-  BoldItalicFont=*-Italic
-]
+  \IfFontExistsTF{Lato}{
+    \setsansfont{Lato}[
+      UprightFont=*-Light,
+      ItalicFont=*-LightItalic,
+      BoldFont=*-Regular,
+      BoldItalicFont=*-Italic
+    ]
+  }{
+    \setsansfont{TeX Gyre Heros}
+  }
+\fi
 
 \setbeamerfont{headline}{family=\Raleway}
 \setbeamerfont{headline title}{size=\Huge,series=\bfseries}
@@ -99,62 +120,49 @@
 \setlength{\logoleftwidth}{0cm}
 \newlength{\logorightwidth}
 \setlength{\logorightwidth}{0cm}
-\newlength{\maxlogowidth}  % space on both sides set to maxlogowidth to keep title centered
-\setlength{\maxlogowidth}{0cm}
+\newlength{\logopadwidth}
+\setlength{\logopadwidth}{10ex}
 
 \newcommand{\logoright}[1]{
-  \newcommand{\insertlogoright}{#1}
-  \settowidth{\logorightwidth}{\insertlogoright}
-  \addtolength{\logorightwidth}{10ex}
-  \setlength{\maxlogowidth}{\maxof{\logoleftwidth}{\logorightwidth}}
+  \gdef\insertlogoright{\mbox{#1}}
 }
 \newcommand{\logoleft}[1]{
-  \newcommand{\insertlogoleft}{#1}
-  \settowidth{\logoleftwidth}{\insertlogoleft}
-  \addtolength{\logoleftwidth}{10ex}
-  \setlength{\maxlogowidth}{\maxof{\logoleftwidth}{\logorightwidth}}
+  \gdef\insertlogoleft{\mbox{#1}}
 }
 
 % Headline
 \setbeamertemplate{headline}
 {
   \begin{beamercolorbox}{headline}
-    \begin{columns}
-      \begin{column}{\maxlogowidth}
-        \vskip5ex
-        \ifdefined\insertlogoleft
-        \vspace*{\fill}
-        \hspace{10ex}
-        \raggedright
-        \insertlogoleft
-        \vspace*{\fill}
-        \else\fi
-      \end{column}
-      \begin{column}{\dimexpr\paperwidth-\maxlogowidth-\maxlogowidth}
-        \usebeamerfont{headline}
-        \vskip3ex
+    \noindent
+    \ifdefined\insertlogoleft
+      \makebox[0pt][l]{\hspace{2.1cm}\smash{\raisebox{-9.5cm}{\insertlogoleft}}}%
+    \fi
+    \ifdefined\insertlogoright
+      \makebox[\paperwidth][r]{\smash{\raisebox{-8.5cm}{\insertlogoright}}\hspace{2.1cm}}%
+    \fi
+    \usebeamerfont{headline}
+    \vskip3ex
+    \begin{center}
+      \begin{minipage}{\dimexpr\paperwidth-20ex}
         \centering
         \ifx \inserttitle \empty \else
-        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\\[0.5ex]}
+        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\par}
         \fi
+      \end{minipage}
+    \end{center}
+    \vskip5ex
+    \begin{center}
+      \begin{minipage}{\dimexpr\paperwidth-34cm}
+        \centering
         \ifx \beamer@shortauthor \empty \else
         {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\\[1ex]}
         \fi
         \ifx \insertinstitute \empty \else
         {\usebeamerfont{headline institute}\usebeamercolor[fg]{headline institute}\insertinstitute\\[1ex]}
         \fi
-      \end{column}
-      \begin{column}{\maxlogowidth}
-        \vskip5ex
-        \ifdefined\insertlogoright
-        \vspace*{\fill}
-        \raggedleft
-        \insertlogoright
-        \hspace{10ex}
-        \vspace*{\fill}
-        \else\fi
-      \end{column}
-    \end{columns}
+      \end{minipage}
+    \end{center}
     \vspace{5ex}
     \ifbeamercolorempty[bg]{headline rule}{}{
       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
@@ -183,34 +191,51 @@
 {
   \end{beamercolorbox}
   \vskip0pt
-  \vspace*{2ex}
+  \vspace*{3ex}
 }
 
 % Alert Block
 \setbeamertemplate{block alerted begin}
 {
   \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block title alerted}
-    \vskip0pt
+    
+    % \vskip0pt
+    
     \usebeamerfont{block title}\insertblocktitle
-    \vskip-1.25ex
-    \begin{beamercolorbox}[colsep=0.025ex]{block separator alerted}\end{beamercolorbox}
+    
+    % \vspace{-1cm}
+
+    % \vskip10.00ex
+
+    % \begin{beamercolorbox}[colsep=0.025ex]{block separator alerted}\end{beamercolorbox}
+
   \end{beamercolorbox}
-  {\parskip0pt\par}
+
+  % {\parskip0pt\par}
+
   \usebeamerfont{block body}
-  \vskip-0.5ex
+  
+  % \vskip1ex
+  
   \begin{beamercolorbox}[colsep*=0ex]{block body alerted}
   \justifying
+  
   \begin{adjustwidth}{1ex}{1ex}
-  \setlength{\parskip}{1ex}
-  \vskip-2ex
+
+  % \setlength{\parskip}{1ex}
+  
+  % \vskip1ex
 }
+
 \setbeamertemplate{block alerted end}
 {
   \end{adjustwidth}
+  
   \vskip1ex
+  
   \end{beamercolorbox}
   \vskip0pt
-  \vspace*{2ex}
+  \vspace*{3ex}
 }
 
 % Example Block
@@ -237,7 +262,7 @@
   \vskip1ex
   \end{beamercolorbox}
   \vskip0pt
-  \vspace*{2ex}
+  \vspace*{3ex}
 }
 
 % Footer
@@ -249,13 +274,13 @@
     \ifbeamercolorempty[bg]{headline rule}{}{
       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.25ex]{headline rule}\end{beamercolorbox}
     }
-    \vspace{1.5ex}
-    \hspace{\sepwidth}
-    \usebeamerfont{footline}
-    \centering
-    \insertfootercontent
-    \hspace{\sepwidth}
-    \vspace{1.5ex}
+    \begin{minipage}[c][5ex][c]{\paperwidth}
+      \centering
+      \makebox[\dimexpr\paperwidth-2cm\relax][c]{%
+        \usebeamerfont{footline}%
+        \insertfootercontent
+      }%
+    \end{minipage}
   \end{beamercolorbox}
   \else\fi
 }

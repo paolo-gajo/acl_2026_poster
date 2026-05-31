@@ -9,60 +9,109 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[size=custom,width=118.9,height=84.1,scale=1.0]{beamerposter}
+\usepackage[size=custom,width=84.1,height=118.9,scale=1.0]{beamerposter}
 \usetheme{gemini}
-\usecolortheme{gemini}
+\input{colorthemes/beamercolorthemegemini.sty}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{array}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.14}
 \usepackage{anyfontsize}
+\usepackage{amsmath}
+\usepackage{bm}
 
 % ====================
-% Lengths
+% Colors
 % ====================
 
-% If you have N columns, choose \sepwidth and \colwidth such that
-% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+\definecolor{UniboRed}{RGB}{187, 46, 41}
+\definecolor{UniboDark}{RGB}{92, 24, 25}
+\definecolor{UniboRose}{RGB}{253, 242, 241}
+\definecolor{UniboInk}{RGB}{35, 31, 32}
+\definecolor{UniboMuted}{RGB}{97, 83, 82}
+\definecolor{UniboGold}{RGB}{207, 166, 92}
+
+\setbeamercolor{headline}{fg=white,bg=UniboRed}
+\setbeamercolor{headline rule}{bg=UniboDark}
+\setbeamercolor{structure}{fg=UniboRed}
+\setbeamercolor{block title}{fg=UniboRed,bg=white}
+\setbeamercolor{block separator}{bg=UniboRed}
+\setbeamercolor{block body}{fg=UniboInk,bg=white}
+\setbeamercolor{block title alerted}{fg=white,bg=UniboRed}
+\setbeamercolor{block separator alerted}{bg=UniboDark}
+\setbeamercolor{block body alerted}{fg=UniboInk,bg=UniboRose}
+\setbeamercolor{block title example}{fg=UniboDark,bg=UniboRose}
+\setbeamercolor{block separator example}{bg=UniboGold}
+\setbeamercolor{block body example}{fg=UniboInk,bg=UniboRose}
+\setbeamercolor{heading}{fg=UniboDark}
+\setbeamercolor{item}{fg=UniboRed}
+
+% ====================
+% Lengths and helpers
+% ====================
+
 \newlength{\sepwidth}
 \newlength{\colwidth}
-\setlength{\sepwidth}{0.025\paperwidth}
-\setlength{\colwidth}{0.3\paperwidth}
+\setlength{\sepwidth}{0.03\paperwidth}
+\setlength{\colwidth}{0.455\paperwidth}
 
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+\newcommand{\paperdir}{../../my_papers/2025_acl___Supervised_Relation_Extraction_is_More_Efficient_When_Approached_as_Graph_Based_Dependency_Parsing/latex}
+\newcommand{\figdir}{\paperdir/figs}
+\newcommand{\assetdir}{../../.figs}
+\newcommand{\metric}[3]{%
+  \begin{tikzpicture}[baseline=(label.base)]
+    \node[rounded corners=3pt, fill=#1, inner xsep=0.55em, inner ysep=0.32em] (label)
+      {\strut\textcolor{white}{\bfseries #2} \textcolor{white}{#3}};
+  \end{tikzpicture}}
 
 % ====================
 % Title
 % ====================
 
-\title{Some fancy title: followed by some more text}
+\title{LLMs Underperform Graph-Based Parsers on Supervised Relation Extraction for Complex Graphs}
 
-\author{Alyssa P. Hacker \inst{1} \and Ben Bitdiddle \inst{2} \and Lem E. Tweakit \inst{2}}
+\author{Paolo Gajo \inst{1} \and Domenic Rosati \inst{2} \and Hassan Sajjad \inst{2} \and Alberto Barrón-Cedeño \inst{1}}
 
-\institute[shortinst]{\inst{1} Some Institute \samelineand \inst{2} Another Institute}
+\institute[shortinst]{\inst{1} University of Bologna \samelineand \inst{2} Dalhousie University}
 
 % ====================
-% Footer (optional)
+% Footer and logos
 % ====================
 
 \footercontent{
-  \href{https://www.example.com}{https://www.example.com} \hfill
-  ABC Conference 2025, New York --- XYZ-1234 \hfill
-  \href{mailto:alyssa.p.hacker@example.com}{alyssa.p.hacker@example.com}}
-% (can be left out to remove footer)
+  \large ACL 2026, San Diego, USA \hfill
+  % Relation extraction as graph-based dependency parsing \hfill
+  \href{mailto:paolo.gajo2@unibo.it}{paolo.gajo2@unibo.it}}
 
-% ====================
-% Logo (optional)
-% ====================
-
-% use this to include logos on the left and/or right side of the header:
-% \logoright{\includegraphics[height=7cm]{logo1.pdf}}
-% \logoleft{\includegraphics[height=7cm]{logo2.pdf}}
+\logoleft{%
+  % \makebox[24cm][l]{%
+    \includegraphics[height=6cm]{\assetdir/logos/universities/Seal_of_the_University_of_Bologna_bg.pdf}%
+    \hspace{0.5cm}%
+    \includegraphics[height=6cm]{\assetdir/logos/universities/dal_shield.pdf}%
+  % }%
+  }
+\logoright{
+    \includegraphics[width=18cm]{\assetdir/logos/conferences/ACL2026_logo_v8.png}%
+  }
 
 % ====================
 % Body
 % ====================
+
+\setbeamerfont{normal text}{size=\Large}
+\setbeamerfont{normal text}{size=\Large}
+\setbeamerfont{block body}{size=\Large}
+\setbeamerfont{block body alerted}{size=\Large}
+\setbeamerfont{block body example}{size=\Large}
+\setbeamerfont{caption}{size=\Large}
+\setbeamerfont{caption name}{size=\Large}
+
+\setbeamerfont{block title}{size=\Large}
+\setbeamerfont{block title alerted}{size=\Large}
+\setbeamerfont{block title example}{size=\Large}
 
 \begin{document}
 
@@ -72,276 +121,201 @@
 
 \begin{column}{\colwidth}
 
-  \begin{block}{A block title}
-
-    Some block contents, followed by a diagram, followed by a dummy paragraph.
-
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}[scale=6]
-        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
-        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
-          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
-      \end{tikzpicture}
-      \caption{A figure caption.}
-    \end{figure}
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-    eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-    lobortis augue, ut lobortis turpis rhoncus sed. Proin feugiat nibh a
-    lacinia dignissim. Proin scelerisque, risus eget tempor fermentum, ex
-    turpis condimentum urna, quis malesuada sapien arcu eu purus.
-
-  \end{block}
-
-  \begin{block}{A block containing a list}
-
-    Curabitur condimentum sem id semper vulputate. Nam lobortis ultrices
-    iaculis. Maecenas bibendum, sem vel vehicula tempus, nisi tortor eleifend
-    tellus, at molestie mi libero ut turpis. Duis finibus finibus sapien, ut
-    mollis odio malesuada a. Aenean ut ex augue. Quisque vulputate scelerisque
-    eros quis bibendum. Nunc accumsan nisl a tincidunt dapibus. Nulla ut
-    vulputate elit, quis posuere tellus. Aliquam euismod nulla ipsum, eu
-    blandit metus fermentum sed. Proin ultrices sodales nulla eu molestie.
-    Nullam mi odio, blandit nec dui lacinia, accumsan facilisis nunc. Maecenas
-    vel est et magna dapibus cursus id in ante.
-
-    \begin{itemize}
-      \item \textbf{Mauris tempor} risus nulla, sed ornare
-      \item \textbf{Libero tincidunt} a duis congue vitae
-      \item \textbf{Dui ac pretium} morbi justo neque, ullamcorper
-    \end{itemize}
-
-    Cras imperdiet vel elit dignissim cursus. Nulla vehicula, lacus sed lacinia
-    hendrerit, tortor libero euismod orci, sodales cursus felis arcu sit amet
-    metus. Suspendisse sit amet tincidunt nisi. Maecenas id libero rutrum,
-    sodales enim id, varius sem. Maecenas ac felis vel dolor feugiat pharetra.
-    Nullam suscipit libero efficitur, commodo lacus in, blandit mi. Nam at
-    sagittis nisl. Mauris eu enim nibh. In sollicitudin sit amet tortor
-    imperdiet convallis.
-
-    Mauris eget risus a purus feugiat consectetur. Aliquam suscipit nunc
-    nulla, sed feugiat massa volutpat ac. Nullam quis bibendum orci. Cras
-    blandit odio velit, et tempus neque malesuada ut. Fusce pharetra mauris
-    sed magna ultrices, eget aliquet dui pellentesque. Nullam porta eleifend
-    leo eu feugiat. Sed quis libero in magna interdum sagittis ut sed mi.
-
-  \end{block}
-
-  \begin{alertblock}{A highlighted block}
-
-    This block catches your eye, so \textbf{important stuff} should probably go
-    here.
-
-    Curabitur eu libero vehicula, cursus est fringilla, luctus est. Morbi
-    consectetur mauris quam, at finibus elit auctor ac. Aliquam erat volutpat.
-    Aenean at nisl ut ex ullamcorper eleifend et eu augue. Aenean quis velit
-    tristique odio convallis ultrices a ac odio.
-
-    \begin{itemize}
-      \item \textbf{Fusce dapibus tellus} vel tellus semper finibus. In
-        consequat, nibh sed mattis luctus, augue diam fermentum lectus.
-      \item \textbf{In euismod erat metus} non ex. Vestibulum luctus augue in
-        mi condimentum, at sollicitudin lorem viverra.
-      \item \textbf{Suspendisse vulputate} mauris vel placerat consectetur.
-        Mauris semper, purus ac hendrerit molestie, elit mi dignissim odio, in
-        suscipit felis sapien vel ex.
-    \end{itemize}
-
-    Aenean tincidunt risus eros, at gravida lorem sagittis vel. Vestibulum ante
-    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
-
+  \begin{alertblock}{Motivation}
+    Relation extraction (RE) is fundamental for knowledge graph construction. While LLMs can carry out RE from in-context learning (ICL) examples, ICL performance is not satisfactory without domain fine-tuning. Here, we compare a state-of-the-art graph-based parser architecture to LLMs for RE in supervised settings.
   \end{alertblock}
 
-\end{column}
+  \begin{block}{Relation extraction as latent graph inference}
+    RE can be framed as predicting labeled edges over a text graph.
+    Each document is represented as RDF-style triples, i.e. $(\texttt{head},\ \texttt{relation},\ \texttt{dependent})$.
+    Each triple can be seen as two nodes connected by an edge. Thus, the task can be framed as dependency parsing.
+    % : infer nodes, labeled directed edges, and edge labels over the linguistic graph.
 
-\separatorcolumn
+    \vspace{1cm}
 
-\begin{column}{\colwidth}
-
-  \begin{block}{A block containing an enumerated list}
-
-    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac
-    interdum. In quis suscipit erat. \textbf{Phasellus mauris felis, molestie
-    ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis
-    fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam
-    mollis condimentum purus quis sodales. Nullam eu felis eu nulla eleifend
-    bibendum nec eu lorem. Vivamus felis velit, volutpat ut facilisis ac,
-    commodo in metus.
-
-    \begin{enumerate}
-      \item \textbf{Morbi mauris purus}, egestas at vehicula et, convallis
-        accumsan orci. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus.
-      \item \textbf{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec
-        massa ac sollicitudin. Curabitur cursus, metus nec imperdiet bibendum,
-        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
-      \item \textbf{Vestibulum et massa diam}. Phasellus fermentum augue non
-        nulla accumsan, non rhoncus lectus condimentum.
-    \end{enumerate}
-
-  \end{block}
-
-  \begin{block}{Fusce aliquam magna velit}
-
-    Et rutrum ex euismod vel. Pellentesque ultricies, velit in fermentum
-    vestibulum, lectus nisi pretium nibh, sit amet aliquam lectus augue vel
-    velit. Suspendisse rhoncus massa porttitor augue feugiat molestie. Sed
-    molestie ut orci nec malesuada. Sed ultricies feugiat est fringilla
-    posuere.
+    
 
     \begin{figure}
       \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            scale only axis,
-            no markers,
-            domain=0:2*pi,
-            samples=100,
-            axis lines=center,
-            axis line style={-},
-            ticks=none]
-          \addplot[red] {sin(deg(x))};
-          \addplot[blue] {cos(deg(x))};
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Another figure caption.}
+      \includegraphics[width=\linewidth]{\figdir/parser_diagram.pdf}
+      \vspace{0.5cm}
+      \caption{The graph-based parser scores head--dependent edges and relation labels with biaffine attention.}
+      \label{fig:graph-parser-diagram}
     \end{figure}
 
-    In in mi consequat, tristique felis at, dapibus lacus. Fusce sed eleifend
-    sem. Phasellus viverra eros enim. Ut quis pulvinar turpis. In eu faucibus
-    risus. Morbi convallis elit metus, nec vestibulum justo sollicitudin sit
-    amet. Duis et magna accumsan, rutrum erat ut, pulvinar eros. Nunc ac tellus
-    suscipit, sagittis massa nec, ultricies mi. Praesent eget placerat sem. Sed
-    interdum, ligula ut condimentum facilisis, risus risus congue ex, at ornare
-    eros ipsum vel sapien. Suspendisse tincidunt elit ut magna consequat, at
-    dapibus est fringilla. Aliquam vitae dolor urna. Curabitur pellentesque
-    pretium convallis. Sed et ex vel nisi condimentum finibus. Cras blandit
-    nibh molestie venenatis feugiat. Proin nec justo pulvinar, euismod elit
-    viverra, condimentum sem.
+    % \vspace{1.5cm}
+
+    The graph parser we use scores edges via biaffine attention. Conversely, LLMs output their predictions by generating a JSON containing literal triples.
 
   \end{block}
 
-  \begin{block}{Nam cursus consequat egestas}
+  \begin{exampleblock}{Experimental setup}
+    
+    \vspace{0.4em}
+    \centering
+    \metric{UniboRed}{124\,M}{graph parser}
+    \hspace{1em}
+    \metric{UniboRed}{7\,B--70\,B}{LLMs}
+    \hspace{1em}
+    \metric{UniboRed}{6}{datasets}
 
-    Nulla eget sem quam. Ut aliquam volutpat nisi vestibulum convallis. Nunc a
-    lectus et eros facilisis hendrerit eu non urna. Interdum et malesuada fames
-    ac ante \textit{ipsum primis} in faucibus. Etiam sit amet velit eget sem
-    euismod tristique. Praesent enim erat, porta vel mattis sed, pharetra sed
-    ipsum. Morbi commodo condimentum massa, \textit{tempus venenatis} massa
-    hendrerit quis. Maecenas sed porta est. Praesent mollis interdum lectus,
-    sit amet sollicitudin risus tincidunt non.
-
-    Etiam sit amet tempus lorem, aliquet condimentum velit. Donec et nibh
-    consequat, sagittis ex eget, dictum orci. Etiam quis semper ante. Ut eu
-    mauris purus. Proin nec consectetur ligula. Mauris pretium molestie
-    ullamcorper. Integer nisi neque, aliquet et odio non, sagittis porta justo.
+    \vspace{0.4em}
+    \raggedright
 
     \begin{itemize}
-      \item \textbf{Sed consequat} id ante vel efficitur. Praesent congue massa
-        sed est scelerisque, elementum mollis augue iaculis.
-        \begin{itemize}
-          \item In sed est finibus, vulputate
-            nunc gravida, pulvinar lorem. In maximus nunc dolor, sed auctor eros
-            porttitor quis.
-          \item Fusce ornare dignissim nisi. Nam sit amet risus vel lacus
-            tempor tincidunt eu a arcu.
-          \item Donec rhoncus vestibulum erat, quis aliquam leo
-            gravida egestas.
-        \end{itemize}
-      \item \textbf{Sed luctus, elit sit amet} dictum maximus, diam dolor
-        faucibus purus, sed lobortis justo erat id turpis.
-      \item \textbf{Pellentesque facilisis dolor in leo} bibendum congue.
-        Maecenas congue finibus justo, vitae eleifend urna facilisis at.
+      \item \textbf{Graph parser:} frozen BERT with LSTMs and biaffine attn. (Fig.~\ref{fig:graph-parser-diagram}).
+      \item \textbf{LLMs:} Mistral-7B-Instruct, Qwen3-14B-Base, Qwen3-32B, and Llama-3.3-70B-Instruct.
+      \item \textbf{LLM Prompts:} Descriptive, no task info, adversarial.
     \end{itemize}
-
-  \end{block}
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
-
-  \begin{exampleblock}{A highlighted block containing some math}
-
-    A different kind of highlighted block.
-
-    $$
-    \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-    $$
-
-    Interdum et malesuada fames $\{1, 4, 9, \ldots\}$ ac ante ipsum primis in
-    faucibus. Cras eleifend dolor eu nulla suscipit suscipit. Sed lobortis non
-    felis id vulputate.
-
-    \heading{A heading inside a block}
-
-    Praesent consectetur mi $x^2 + y^2$ metus, nec vestibulum justo viverra
-    nec. Proin eget nulla pretium, egestas magna aliquam, mollis neque. Vivamus
-    dictum $\mathbf{u}^\intercal\mathbf{v}$ sagittis odio, vel porta erat
-    congue sed. Maecenas ut dolor quis arcu auctor porttitor.
-
-    \heading{Another heading inside a block}
-
-    Sed augue erat, scelerisque a purus ultricies, placerat porttitor neque.
-    Donec $P(y \mid x)$ fermentum consectetur $\nabla_x P(y \mid x)$ sapien
-    sagittis egestas. Duis eget leo euismod nunc viverra imperdiet nec id
-    justo.
-
   \end{exampleblock}
 
-  \begin{block}{Nullam vel erat at velit convallis laoreet}
-
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos. Phasellus libero enim, gravida sed erat sit amet,
-    scelerisque congue diam. Fusce dapibus dui ut augue pulvinar iaculis.
+  \begin{block}{Graph complexity varies widely}
+    The datasets range from short, sparse relation graphs to recipe and dependency graphs with a high number $k$ of edges per document.
 
     \begin{table}
       \centering
-      \begin{tabular}{l r r c}
+      % \renewcommand{\arraystretch}{1.12}
+      \vspace{0.5cm}
+      \begin{tabular}{l@{\hspace{20mm}}r@{\hspace{20mm}}r@{\hspace{20mm}}r@{\hspace{20mm}}r@{\hspace{20mm}}}
         \toprule
-        \textbf{First column} & \textbf{Second column} & \textbf{Third column} & \textbf{Fourth} \\
+        \textbf{Dataset} & \textbf{Min} & \textbf{Mean $k$} & \textbf{Max} & \textbf{$k \leq 5$} \\
         \midrule
-        Foo & 13.37 & 384,394 & $\alpha$ \\
-        Bar & 2.17 & 1,392 & $\beta$ \\
-        Baz & 3.14 & 83,742 & $\delta$ \\
-        Qux & 7.59 & 974 & $\gamma$ \\
+        CoNLL04 & 1 & 1.42 & 11 & 98.54\% \\
+        ADE     & 1 & 1.59 & 21 & 97.77\% \\
+        SciERC  & 1 & 2.38 & 17 & 93.49\% \\
+        enEWT   & 5 & 17.83 & 158 & 25.03\% \\
+        SciDTB  & 5 & 23.41 & 100 & 2.50\% \\
+        ERFGC   & 4 & 49.19 & 167 & 3.33\% \\
         \bottomrule
       \end{tabular}
-      \caption{A table caption.}
+      \vspace{0.5cm}
+      \caption{Relation-count statistics across train, development, and test splits.}
     \end{table}
 
-    Donec quis posuere ligula. Nunc feugiat elit a mi malesuada consequat. Sed
-    imperdiet augue ac nibh aliquet tristique. Aenean eu tortor vulputate,
-    eleifend lorem in, dictum urna. Proin auctor ante in augue tincidunt
-    tempor. Proin pellentesque vulputate odio, ac gravida nulla posuere
-    efficitur. Aenean at velit vel dolor blandit molestie. Mauris laoreet
-    commodo quam, non luctus nibh ullamcorper in. Class aptent taciti sociosqu
-    ad litora torquent per conubia nostra, per inceptos himenaeos.
+    % The core comparison asks whether model performance degrades as $k$ increases.
+  \end{block}
 
-    \begin{enumerate}
-      \item \textbf{Praesent vel enim} eget urna auctor accumsan. Ut volutpat, erat sed vulputate porta, metus dolor consectetur eros, eget vestibulum purus nulla hendrerit ex.
-      \item \textbf{Lorem ipsum dolor sit amet}, consectetur adipiscing elit. Proin lobortis euismod eros at rhoncus.
-      \item \textbf{Sed eget odio varius}, posuere tellus malesuada, commodo tellus. Sed sollicitudin mauris nibh, quis mattis magna fermentum et.
-      \item \textbf{Suspendisse ut tellus} ullamcorper, faucibus mauris vitae, blandit est. Aenean gravida sodales pretium. Nullam sed dolor in arcu maximus blandit vel non eros.
-      \item \textbf{Fusce quis elit} vel lectus porta tempus.
-    \end{enumerate}
+\end{column}
 
-    Nulla varius finibus volutpat. Mauris molestie lorem tincidunt, iaculis
-    libero at, gravida ante. Phasellus at felis eu neque suscipit suscipit.
-    Integer ullamcorper, dui nec pretium ornare, urna dolor consequat libero,
-    in feugiat elit lorem euismod lacus. Pellentesque sit amet dolor mollis,
-    auctor urna non, tempus sem.
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{block}{Results}
+    After fine-tuning, LLMs perform well on small relation graphs, but their F$_1$ drops as graph complexity grows.
+    The graph-based parser is lighter, faster at inference, and increasingly stronger on complex graphs.
+  
+    \begin{table}
+      \centering
+      % \renewcommand{\arraystretch}{1.14}
+      \vspace{0.5cm}
+      \begin{tabular}{l@{\hspace{10mm}}c@{\hspace{10mm}}c@{\hspace{10mm}}c@{\hspace{10mm}}c@{\hspace{10mm}}c@{\hspace{10mm}}c@{\hspace{10mm}}}
+        \toprule
+        \textbf{Model} & \textbf{CoNLL} & \textbf{ADE} & \textbf{SciERC} & \textbf{enEWT} & \textbf{SciDTB} & \textbf{ERFGC} \\
+        \midrule
+        Best LLM & \textbf{0.717} & \textbf{0.836} & \textbf{0.444} & 0.851 & 0.886 & 0.606 \\
+        Graph parser & 0.668 & 0.697 & 0.351 & \textbf{0.865} & \textbf{0.918} & \textbf{0.713} \\
+        % \midrule
+        % Parser gain & -0.049 & -0.139 & -0.093 & +0.014 & +0.032 & +0.107 \\
+        \bottomrule
+      \end{tabular}
+      \vspace{0.5cm}
+      \caption{Best graph-based parser vs LLM results in terms of micro-F$_1$.}
+    \end{table}
 
   \end{block}
 
-  \begin{block}{References}
+  \begin{alertblock}{Graph-based parser vs best LLM}
 
-    \nocite{*}
-    \footnotesize{\bibliographystyle{plain}\bibliography{poster}}
+    \vspace{0.5cm}
 
+    \begin{tikzpicture}
+      \centering
+      \begin{axis}[
+        width=0.9\linewidth,
+        height=0.25\linewidth,
+        font=\large,
+        ybar,
+        bar width=20pt,
+        ymin=-0.25,
+        ymax=0.25,
+        ylabel={$\Delta$F$_1$},
+        ylabel style={font=\Large},
+        ytick={-0.15,0,0.15},
+        symbolic x coords={CoNLL04,ADE,SciERC,enEWT,SciDTB,ERFGC},
+        xtick=data,
+        x tick label style={rotate=0, anchor=center, yshift=-0.5cm},
+        y tick label style={rotate=0, anchor=east, font=\large, xshift=0cm},
+        ymajorgrids=true,
+        grid style={UniboRose},
+        axis line style={UniboMuted},
+        tick style={UniboMuted},
+        nodes near coords,
+        nodes near coords style={font=\large, /pgf/number format/fixed, /pgf/number format/precision=3},
+      ]
+        \addplot[fill=UniboRed, draw=UniboDark] coordinates {
+          (CoNLL04,-0.049) (ADE,-0.139) (SciERC,-0.093)
+          (enEWT,0.014) (SciDTB,0.032) (ERFGC,0.107)
+        };
+      \draw[dashed, thick, black]
+        (rel axis cs:0,0.5) -- (rel axis cs:1,0.5);
+      \end{axis}
+    \end{tikzpicture}
+  
+  LLMs win on the sparse RE datasets. The parser wins once the average document has roughly 18 or more relations.
+  
+  \end{alertblock}
+
+  \begin{block}{LLMs degrade more as graphs grow}
+    The strongest LLM setting, Qwen3-14B-Base with a no-task-info prompt, shows a negative correlation between edge count $k$ and F$_1$ on five of six datasets. The parser is less sensitive to $k$.
+
+    \begin{table}
+      \centering
+      % \renewcommand{\arraystretch}{1.14}
+      \vspace{0.5cm}
+      \begin{tabular}{l@{\hspace{10mm}}r@{\hspace{10mm}}r@{\hspace{10mm}}r@{\hspace{10mm}}r@{\hspace{10mm}}r@{\hspace{10mm}}r@{\hspace{10mm}}}
+        \toprule
+        \textbf{Model} & \textbf{CoNLL} & \textbf{ADE} & \textbf{SciERC} & \textbf{enEWT} & \textbf{SciDTB} & \textbf{ERFGC} \\
+        \midrule
+        Qwen3-14B & -0.143 & -0.152 & 0.171 & -0.270 & -0.185 & -0.639 \\
+        Graph parser & 0.012 & -0.046 & 0.067 & -0.043 & -0.195 & -0.206 \\
+        \bottomrule
+      \end{tabular}
+      \vspace{0.5cm}
+      \caption{Pearson $r$ between relation count $k$ and micro-F$_1$.}
+    \end{table}
+
+    On ERFGC, the LLM performance is strongly anti-correlated with graph size, while the parser remains much more stable.
   \end{block}
+
+  \begin{block}{Discussion}
+    \begin{itemize}
+      \item \textbf{LLMs serialize graph prediction.} Inputs, labels, and output formatting are all represented as text, so relevant entities and relation labels can become far apart in the prompt and generation.
+      \item \textbf{Graph parsers score edges directly.} Pairwise scoring
+      % keeps the task in the graph domain and
+      avoids generating thousands of output tokens for dense graphs.
+      \item \textbf{Fine-tuning overrides prompt info.} The no-task-info prompt layou is competitive with descriptive prompts.
+      \item \textbf{Scale is not enough.} The 70\,B LLM improves on some datasets with more steps, but still trails the 124\,M parser on the most complex graphs.
+    \end{itemize}
+  \end{block}
+
+  \begin{exampleblock}{Takeaways}
+    \heading{For supervised relation extraction}
+    Use graph-based parsers when documents contain many relations, especially dependency-like or recipe-flow graphs.
+
+    \heading{For LLM-based extraction}
+    The bottleneck is not only model capacity. It is also the mismatch between graph-structured supervision and text-serialized prediction.
+
+    \heading{Future work}
+    Investigate attention-level failure modes and reduce formatting overhead through compressed prompts or graph-native decoding.
+  \end{exampleblock}
+
+  % \begin{block}{Key references}
+  %   \small
+  %   Dozat and Manning (2017), Deep biaffine attention for neural dependency parsing. \\
+  %   Bhatt et al. (2024), end-to-end graph-based parsing for entity and relation extraction. \\
+  %   Gajo et al. (2026), LLMs underperform graph-based parsers on supervised relation extraction for complex graphs.
+  % \end{block}
 
 \end{column}
 
